@@ -10,17 +10,21 @@ interface Props {
     space: Space,
     showMenu: boolean,
     setShowMenu: React.Dispatch<React.SetStateAction<boolean>>
+    color:string
+    icon:  React.ReactElement | undefined
+    setIcon:React.Dispatch<React.SetStateAction<React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined>>
+
 }
 
 
 
-const SpaceMenuAccordion = ({ space, showMenu, setShowMenu }: Props) => {
+const SpaceMenuAccordion = ({ space, showMenu, setShowMenu, color, icon, setIcon }: Props) => {
     const [projectsMenu, setProjectsMenu] = useState<boolean>(false)
     const [folders, setFolders] = useState<Folder[]>([])
     const [files, setFiles] = useState<File[]>([])
 
     const handleFolder = () => {
-        setFolders([...folders, { _id: 229, _name: 'magarni' }])
+        setFolders([...folders, { _id: new Date(new Date().getTime()), _name: 'magarni' }])
         console.log(folders)
     }
 
@@ -40,9 +44,9 @@ const SpaceMenuAccordion = ({ space, showMenu, setShowMenu }: Props) => {
                 <Box display="flex" alignItems="center">
                     <Tooltip label={space._name} placement='top'>
                         <Box
-                            backgroundColor="red"
+                            backgroundColor={space.color}
                             p="2" rounded="5px" mr="3" color="white"
-                            w="28px"
+                            w="22px"
                             h="26px"
                             textAlign="center"
                             display="flex"
@@ -50,7 +54,8 @@ const SpaceMenuAccordion = ({ space, showMenu, setShowMenu }: Props) => {
                             justifyContent="center"
                             fontSize="14px"
                             fontWeight="semibold">
-                            {space._name.charAt(0).toUpperCase()}
+                           {icon == null ?  <Text>{space._name.charAt(0).toUpperCase()} </Text>: space.icon}  
+                            
                         </Box>
                     </Tooltip>
                     <Text fontSize="14px">{space._name}</Text>
@@ -70,7 +75,7 @@ const SpaceMenuAccordion = ({ space, showMenu, setShowMenu }: Props) => {
             </Box>
 
             <Collapse in={projectsMenu} animateOpacity>
-                <Box onClick={handleFolder}> Add Folder +
+                <Box > <span onClick={handleFolder}>add folder </span>
                     {folders.map((folder) => (
                         <Folders key={folder._id} folder={folder} showMenu={showMenu} setShowMenu={setShowMenu} />
                     ))}</Box></Collapse>

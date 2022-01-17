@@ -1,14 +1,16 @@
 export interface Space {
-    _id: number
+    _id: Date
     _name: string
+    color:string
+    icon:  React.ReactElement | undefined
 }
 
 export interface Folder {
-    _id: number
+    _id: Date
     _name:string
 }
 
 export interface File {
-    _id: number
+    _id: Date
     _name:string
 }
